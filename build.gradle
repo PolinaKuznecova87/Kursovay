@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "io.freefair.lombok" version "6.6.1"
+    id 'io.qameta.allure' version '2.11.2'
 }
 
 group 'ru.netology'
@@ -10,21 +11,39 @@ sourceCompatibility = 11
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
 
-repositories {
-    mavenCentral()
-}
+allure {
+    version = '2.20.1'
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
-    testImplementation 'com.github.javafaker:javafaker:1.0.2'
-    testImplementation 'mysql:mysql-connector-java:8.0.30'
-    testImplementation 'commons-dbutils:commons-dbutils:1.7'
-    testImplementation 'com.codeborne:selenide:6.17.2'
+    useJUnit5 {
+        version = '2.20.1'
+
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
+        testImplementation 'com.github.javafaker:javafaker:1.0.2'
+        testImplementation 'mysql:mysql-connector-java:8.0.30'
+        testImplementation 'commons-dbutils:commons-dbutils:1.7'
+        testImplementation 'com.codeborne:selenide:6.17.2'
+        testImplementation 'org.projectlombok:lombok:1.18.24'
+        compileOnly 'org.projectlombok:lombok:1.18.24'
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        testCompileOnly 'org.projectlombok:lombok:1.18.24'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+        testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.32'
+        testImplementation 'io.qameta.allure:allure-selenide:2.20.1'
+        testImplementation 'io.rest-assured:rest-assured:4.3.0'
+        testImplementation 'io.rest-assured:json-schema-validator:4.3.1'
 
 
-}
+    }
 
-test {
-    useJUnitPlatform()
-    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    test {
+        useJUnitPlatform()
+        systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    }
 }
